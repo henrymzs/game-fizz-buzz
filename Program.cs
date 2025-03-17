@@ -1,4 +1,6 @@
-﻿Console.WriteLine("----- BEM-VINDO AO GAME FIZZ BUZZ -----");
+﻿using System.Reflection.Metadata;
+
+Console.WriteLine("----- BEM-VINDO AO GAME FIZZ BUZZ -----");
 Console.WriteLine("Digite um número para começar o jogo ou digite '0' para encerrar o jogo.");
 
 while (true)
@@ -73,9 +75,34 @@ void easyMode()
 void mediumMode()
 {
     Random rand = new Random();
+    int score = 0;
+    bool playWithGoal = false;
+    int goal = 0;
+
+    Console.WriteLine("Deseja jogar livremente ou com meta de pontos?");
+    Console.WriteLine("1 - Jogo Livre");
+    Console.WriteLine("2 - Jogar com Meta de Pontos");
+    Console.Write("Escolha: ");
+    
+    string choice = Console.ReadLine().Trim();
+
+    if (choice == "2")
+    {
+        playWithGoal = true;
+        Console.WriteLine("Digite a meta de pontos que deseja alcançar: ");
+
+        while (!int.TryParse(Console.ReadLine(), out goal) || goal <= 0)
+        {
+            Console.WriteLine("Por favor, insira um número válido maior que 0. ");
+            Console.WriteLine("Digite a meta de pontos: ");
+        }
+
+        Console.WriteLine($"Sua meta é atingir {goal} pontos!");
+    }
 
     while (true)
     {
+        Console.WriteLine($"\nPontuação Atual: {score} pontos");
         int randomNumber = rand.Next(1, 100);
         Console.WriteLine("\n0 - Para sair");
         Console.WriteLine($"Qual a resposta para o número {randomNumber}?");
@@ -110,11 +137,22 @@ void mediumMode()
 
         if (response == correctAnswer)
         {
-            Console.WriteLine("Resposta Correta!");
+            Console.WriteLine("Resposta Correta! +10 Pontos");
+            score += 10;
         }
         else
         {
-            Console.WriteLine($"Resposta errada! A resposta correta era: {correctAnswer}");
+            Console.WriteLine($"Resposta errada! A resposta correta era: {correctAnswer} (-5 Pontos)");
+            score -= 5;
         }
+
+        if (playWithGoal && score >= goal)
+        {
+            Console.WriteLine($"Parabéns! Você atingiu a meta de {goal} pontos!");
+            break;
+        }
+
     }
+    
+    Console.WriteLine($"Sua pontuação final foi: {score} pontos");
 }

@@ -7,6 +7,7 @@ while (true)
     Console.WriteLine("\nEscolha dificuldade:");
     Console.WriteLine("1 - Jogar Modo Livre:");
     Console.WriteLine("2 - Intermediário");
+    Console.WriteLine("3 - Difícil");
     Console.WriteLine("0 - Sair do Jogo");
     Console.Write("Sua Escolha: ");
 
@@ -29,6 +30,10 @@ while (true)
     else if (difficulty == 2)
     {
         mediumMode();
+    }
+    else if (difficulty == 3)
+    {
+        hardMode();
     }
     else
     {
@@ -164,4 +169,107 @@ void mediumMode()
     }
     Console.ResetColor();
     Console.WriteLine($"Sua pontuação final foi: {score} pontos");
+}
+/*
+Implementar modo dificil do jogo, sem modo livre, apenas com meta acima de 50 pontos, pensar na pontuação de perda e ganhos de forma que fique mais dificil
+Implementar o modo impossivel, sem modo livre, apenas com meta acima de 200 pontos, colocar pontuação de forma impossivel para que o usuario ganhe
+Implementar o modo educação, onde o usuário vai entender mais da lógica do jogo, onde iremos dizer oque errou e dizer a lógica por tras do game, de modo que ele posso praticar e aprender e ir para outros modos mais dificeis do game
+
+
+void impossibleMode()
+{
+
+}
+
+void educationMode()
+{
+
+}
+*/
+
+void hardMode()
+{
+    Random rand = new Random();
+    int score = 0;
+    int goal;
+
+    Console.WriteLine("\nModo Difícil: Apenas permitido metas acima de 50 pontos!");
+    Console.WriteLine("Digite 0 para voltar ao menu principal");
+
+    while (true)
+    {
+        Console.Write("Digite a meta de pontos que deseja alcançar: ");
+
+        bool isValid = int.TryParse(Console.ReadLine(), out goal);
+
+        if (!isValid)
+        {
+            Console.WriteLine("\nEntrada inválida! Digite um número inteiro.");
+            continue;
+        }
+
+        if (goal > 50)
+        {
+           break;
+        }
+
+        Console.WriteLine("\nApenas permitido meta acima de 50 pontos! ");
+    }
+    Console.WriteLine($"\nSua meta é atingir {goal} pontos!");
+
+
+    while (true)
+    {
+        Console.WriteLine($"Pontuação atual: {score} pontos\n");
+        int randomNumber = rand.Next(1,100);
+        Console.WriteLine($"Qual a resposta para o número {randomNumber}?");
+        Console.WriteLine("Digite: Fizz, Buzz, FizzBuzz ou o próprio número: ");
+        Console.Write("Sua Resposta: ");
+
+        string response = Console.ReadLine().Trim().ToLower();
+
+        if (response == "0")
+        {
+            Console.WriteLine("...Voltando ao menu principal...");
+            break;
+        }
+
+        string correctAnswer;
+
+        if (randomNumber % 3 == 0 && randomNumber % 5 == 0)
+        {
+            correctAnswer = "fizzbuzz";
+        }
+        else if (randomNumber % 3 == 0)
+        {
+            correctAnswer = "fizz";
+        }
+        else if (randomNumber % 5 == 0)
+        {
+            correctAnswer = "buzz";
+        }
+        else
+        {
+            correctAnswer = randomNumber.ToString();
+        }
+
+        if (response == correctAnswer)
+        {
+            Console.WriteLine("\nResposta Correta! + 3 Pontos");
+            score += 3;
+        }
+        else 
+        {
+            Console.WriteLine($"\nResposta Incorreta! A resposta era: {correctAnswer}\n-9 Pontos");
+            score -= 9;
+        }
+
+        if (score >= goal)
+        {
+            Console.WriteLine($"Parabéns! Você atingiu a meta de {goal} pontos!");
+            break;
+        }
+    }
+    Console.WriteLine($"Sua pontuação final foi: {score} pontos!");
+
 }

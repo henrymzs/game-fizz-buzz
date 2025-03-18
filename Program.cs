@@ -98,11 +98,8 @@ void mediumMode()
 
         string isValid = Console.ReadLine();
 
-       
-
         if (!int.TryParse(isValid, out goal))
         {
-
             Console.WriteLine("\nEntrada inválida! Digite um número inteiro.");
             continue;
         }
@@ -209,20 +206,27 @@ void hardMode()
     {
         Console.Write("Digite a meta de pontos que deseja alcançar: ");
 
-        bool isValid = int.TryParse(Console.ReadLine(), out goal);
+        string isValid = Console.ReadLine();
 
-        if (!isValid)
+        if (!int.TryParse(isValid, out goal))
         {
             Console.WriteLine("\nEntrada inválida! Digite um número inteiro.");
             continue;
         }
 
-        if (goal > 50)
+        if (goal == 0)
         {
-           break;
+            Console.WriteLine("...Voltando ao menu principal...");
+            return;
         }
 
-        Console.WriteLine("\nApenas permitido meta acima de 50 pontos! ");
+        if (goal <= 50)
+        {
+            Console.WriteLine("\nApenas permitido meta acima de 50 pontos! ");
+            continue;
+        }
+
+        break;
     }
     Console.WriteLine($"\nSua meta é atingir {goal} pontos!");
 

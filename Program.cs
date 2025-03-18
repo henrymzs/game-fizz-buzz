@@ -1,18 +1,18 @@
-﻿using System.Reflection.Metadata;
-
-Console.WriteLine("----- BEM-VINDO AO GAME FIZZ BUZZ -----");
+﻿Console.WriteLine("----- BEM-VINDO AO GAME FIZZ BUZZ -----");
 Console.WriteLine("Digite um número para começar o jogo ou digite '0' para encerrar o jogo.");
 
 while (true)
 {
+    Console.ResetColor();
     Console.WriteLine("\nEscolha dificuldade:");
-    Console.WriteLine("(1 - Fácil)");
-    Console.WriteLine("(2 - Intermediário)");
-    Console.WriteLine("(0 - Sair do Jogo)");
+    Console.WriteLine("1 - Jogar Modo Livre:");
+    Console.WriteLine("2 - Intermediário");
+    Console.WriteLine("0 - Sair do Jogo");
     Console.Write("Sua Escolha: ");
 
     if (!int.TryParse(Console.ReadLine(), out int difficulty))
     {
+        Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("Entrada inválida! Digite um número inteiro.");
         continue;
     }
@@ -32,6 +32,7 @@ while (true)
     }
     else
     {
+        Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("Opção inválida! Escolha 1, 2 ou 0.");
     }
 }
@@ -40,9 +41,11 @@ void easyMode()
 {
     while (true)
     {
+        Console.ResetColor();
         Console.Write("Digite um número (0 para sair): ");
         if (!int.TryParse(Console.ReadLine(), out int number))
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Entrada inválida! Digite um número inteiro.");
             continue;
         }
@@ -93,7 +96,9 @@ void mediumMode()
 
         while (!int.TryParse(Console.ReadLine(), out goal) || goal <= 0)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Por favor, insira um número válido maior que 0. ");
+            Console.ResetColor();
             Console.WriteLine("Digite a meta de pontos: ");
         }
 
@@ -102,6 +107,7 @@ void mediumMode()
 
     while (true)
     {
+        Console.ResetColor();
         Console.WriteLine($"\nPontuação Atual: {score} pontos");
         int randomNumber = rand.Next(1, 100);
         Console.WriteLine("\n0 - Para sair");
@@ -137,22 +143,25 @@ void mediumMode()
 
         if (response == correctAnswer)
         {
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Resposta Correta! +10 Pontos");
             score += 10;
         }
         else
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"Resposta errada! A resposta correta era: {correctAnswer} (-5 Pontos)");
             score -= 5;
         }
 
         if (playWithGoal && score >= goal)
         {
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"Parabéns! Você atingiu a meta de {goal} pontos!");
             break;
         }
 
     }
-    
+    Console.ResetColor();
     Console.WriteLine($"Sua pontuação final foi: {score} pontos");
 }

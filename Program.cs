@@ -1,4 +1,7 @@
-﻿Console.WriteLine("----- BEM-VINDO AO GAME FIZZ BUZZ -----");
+﻿using System.IO.IsolatedStorage;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
+Console.WriteLine("----- BEM-VINDO AO GAME FIZZ BUZZ -----");
 Console.WriteLine("Digite um número para começar o jogo ou digite '0' para encerrar o jogo.");
 
 while (true)
@@ -84,40 +87,49 @@ void mediumMode()
 {
     Random rand = new Random();
     int score = 0;
-    bool playWithGoal = false;
     int goal = 0;
 
-    Console.WriteLine("Deseja jogar livremente ou com meta de pontos?");
-    Console.WriteLine("1 - Jogo Livre");
-    Console.WriteLine("2 - Jogar com Meta de Pontos");
-    Console.Write("Escolha: ");
-    
-    string choice = Console.ReadLine().Trim();
-
-    if (choice == "2")
-    {
-        playWithGoal = true;
-        Console.WriteLine("Digite a meta de pontos que deseja alcançar: ");
-
-        while (!int.TryParse(Console.ReadLine(), out goal) || goal <= 0)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Por favor, insira um número válido maior que 0. ");
-            Console.ResetColor();
-            Console.WriteLine("Digite a meta de pontos: ");
-        }
-
-        Console.WriteLine($"Sua meta é atingir {goal} pontos!");
-    }
+    Console.WriteLine("\nModo Intermediário: Apenas permitido metas acima de 50 pontos!");
+    Console.WriteLine("Digite 0 para voltar ao menu principal");
 
     while (true)
     {
-        Console.ResetColor();
-        Console.WriteLine($"\nPontuação Atual: {score} pontos");
+        Console.Write("Digite a meta de pontos que deseja alcançar: ");
+
+        string isValid = Console.ReadLine();
+
+       
+
+        if (!int.TryParse(isValid, out goal))
+        {
+
+            Console.WriteLine("\nEntrada inválida! Digite um número inteiro.");
+            continue;
+        }
+
+        if (goal == 0)
+        {
+            Console.WriteLine("...Voltando ao menu principal...");
+            return;
+        }
+
+        if (goal <= 50)
+        {
+            Console.WriteLine("\nApenas permitido meta acima de 50 pontos! ");
+            continue;
+        }
+
+        break;
+    }
+
+    Console.WriteLine($"\nSua meta é atingir {goal} pontos!");
+
+    while (true)
+    {
+        Console.WriteLine($"Pontuação Atual: {score} pontos\n");
         int randomNumber = rand.Next(1, 100);
-        Console.WriteLine("\n0 - Para sair");
         Console.WriteLine($"Qual a resposta para o número {randomNumber}?");
-        Console.WriteLine("(Digite Fizz, Buzz, FizzBuzz ou o próprio número)");
+        Console.WriteLine("Digite: Fizz, Buzz, FizzBuzz ou o próprio número");
         Console.Write("Sua Resposta: ");
 
         string response = Console.ReadLine().Trim().ToLower();
@@ -129,6 +141,7 @@ void mediumMode()
         }
 
         string correctAnswer;
+
         if (randomNumber % 3 == 0 && randomNumber % 5 == 0)
         {
             correctAnswer = "fizzbuzz";
@@ -148,26 +161,22 @@ void mediumMode()
 
         if (response == correctAnswer)
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Resposta Correta! +10 Pontos");
-            score += 10;
+            Console.WriteLine("\nResposta Correta! +5 Pontos");
+            score += 5;
         }
         else
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"Resposta errada! A resposta correta era: {correctAnswer} (-5 Pontos)");
-            score -= 5;
+            Console.WriteLine($"\nResposta errada! A resposta correta era: {correctAnswer}\n-3 Pontos");
+            score -= 3;
         }
 
-        if (playWithGoal && score >= goal)
+        if (score >= goal)
         {
-            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"Parabéns! Você atingiu a meta de {goal} pontos!");
             break;
         }
 
     }
-    Console.ResetColor();
     Console.WriteLine($"Sua pontuação final foi: {score} pontos");
 }
 /*

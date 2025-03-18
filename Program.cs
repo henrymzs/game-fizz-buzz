@@ -1,7 +1,4 @@
-﻿using System.IO.IsolatedStorage;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-Console.WriteLine("----- BEM-VINDO AO GAME FIZZ BUZZ -----");
+﻿Console.WriteLine("----- BEM-VINDO AO GAME FIZZ BUZZ -----");
 Console.WriteLine("Digite um número para começar o jogo ou digite '0' para encerrar o jogo.");
 
 while (true)
@@ -16,7 +13,6 @@ while (true)
 
     if (!int.TryParse(Console.ReadLine(), out int difficulty))
     {
-        Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("Entrada inválida! Digite um número inteiro.");
         continue;
     }
@@ -28,7 +24,7 @@ while (true)
     }
     else if (difficulty == 1)
     {
-        easyMode();
+        freeMode();
     }
     else if (difficulty == 2)
     {
@@ -40,20 +36,20 @@ while (true)
     }
     else
     {
-        Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("Opção inválida! Escolha 1, 2 ou 0.");
     }
 }
 
-void easyMode()
+void freeMode()
 {
+    Console.WriteLine("\n0 - Para Sair");
+    Console.WriteLine("Digite um número e descubra se é FizzBuzz, Buzz, Fizz ou nenhum dos três\n");
+    
     while (true)
     {
-        Console.ResetColor();
-        Console.Write("Digite um número (0 para sair): ");
+        Console.Write("Digite um número: ");
         if (!int.TryParse(Console.ReadLine(), out int number))
         {
-            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Entrada inválida! Digite um número inteiro.");
             continue;
         }
